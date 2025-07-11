@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <title>WAFAD LIMITED - William Ansah Farms and Agriculture Development</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Header Styles */
+        header {
+            background: rgba(34, 139, 34, 0.95);
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: #90EE90;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        nav a:hover {
+            color: #90EE90;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #90EE90;
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section with Sliding Background */
+        .hero {
+            left: 0;
+            right: 0;
+            height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            overflow: hidden;
+        }
+
+        .hero-slideshow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+        }
+
+        .hero-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 2s ease-in-out;
+        }
+
+        .hero-slide.active {
+            opacity: 1;
+        }
+
+        .hero-slide:nth-child(1) {
+            background-image: url('hero-slide-1.jpg');
+        }
+
+        .hero-slide:nth-child(2) {
+            background-image: url('hero-slide-2.jpg');
+        }
+
+        .hero-slide:nth-child(3) {
+            background-image: url('hero-slide-3.jpg');
+        }
+
+        .hero-slide:nth-child(4) {
+            background-image: url('hero-slide-4.jpg');
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero-content p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(45deg, #90EE90, #32CD32);
+            color: #228B22;
+            padding: 1rem 2rem;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(144, 238, 144, 0.3);
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(144, 238, 144, 0.5);
+        }
+
+        /* Section Styles */
+        section {
+            padding: 5rem 0;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-left: 2rem;
+            padding-right: 2rem;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            color: #228B22;
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            font-size: 1.1rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* About Section */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-text h3 {
+            font-size: 1.8rem;
+            color: #228B22;
+            margin-bottom: 1rem;
+        }
+
+        .about-text p {
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .about-image {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .about-image img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+        }
+
+        /* Management Section */
+        .management-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .management-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .management-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .management-card img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 1rem;
+            border: 4px solid #90EE90;
+        }
+
+        .management-card h4 {
+            font-size: 1.3rem;
+            color: #228B22;
+            margin-bottom: 0.5rem;
+        }
+
+        .management-card .position {
+            color: #666;
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+
+        /* Farms Section */
+        .farms-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            margin-top: 3rem;
+        }
+
+        .farm-section {
+            background: #f9f9f9;
+            padding: 2rem;
+            border-radius: 15px;
+        }
+
+        .farm-section h3 {
+            color: #228B22;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .farm-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .farm-item {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .farm-item img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .farm-item h4 {
+            color: #228B22;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Impact Section */
+        .impact-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #228B22, #32CD32);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(34, 139, 34, 0.3);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Testimonials Section */
+        .testimonials-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .testimonial-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            font-size: 4rem;
+            color: #90EE90;
+            font-weight: bold;
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .testimonial-author img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .author-info h5 {
+            color: #228B22;
+            margin-bottom: 0.3rem;
+        }
+
+        .author-info p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Footer */
+        footer {
+            background: #228B22;
+            color: white;
+            padding: 3rem 0 1rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h4 {
+            color: #90EE90;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section p, .footer-section a {
+            color: #ccc;
+            text-decoration: none;
+            line-height: 1.8;
+        }
+
+        .footer-section a:hover {
+            color: #90EE90;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #32CD32;
+            padding-top: 1rem;
+            color: #ccc;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav ul {
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-content p {
+                font-size: 1.1rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+
+            .farms-container {
+                grid-template-columns: 1fr;
+            }
+
+            .management-grid {
+                grid-template-columns: 1fr;
+            }
+
+            section {
+                padding: 3rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <a href="#" class="logo">WAFAD <span>LIMITED</span></a>
+            <nav>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#management">Management</a></li>
+                    <li><a href="#farms">Our Farms</a></li>
+                    <li><a href="#impact">Impact</a></li>
+                    <li><a href="#testimonials">Testimonials</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section with Sliding Background -->
+    <section id="home" class="hero">
+        <div class="hero-slideshow">
+            <div class="hero-slide active"></div>
+            <div class="hero-slide"></div>
+            <div class="hero-slide"></div>
+            <div class="hero-slide"></div>
+        </div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>WAFAD LIMITED</h1>
+            <p>William Ansah Farms and Agriculture Development - Leading sustainable agriculture across Africa, transforming communities through innovative farming solutions and agricultural excellence.</p>
+            <a href="#about" class="cta-button">Discover Our Story</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="section-header">
+            <h2>About WAFAD LIMITED</h2>
+            <p>Pioneering agricultural development and sustainable farming solutions across Africa</p>
+        </div>
+        <div class="about-content">
+            <div class="about-text">
+                <h3>Our Mission</h3>
+                <p>WAFAD LIMITED is dedicated to revolutionizing agriculture across Africa through innovative farming techniques, sustainable practices, and community empowerment. Based in Ghana and operating continent-wide, we are committed to food security, environmental sustainability, and rural development.</p>
+                <p>Our comprehensive approach combines modern agricultural technology with traditional knowledge, ensuring that we not only increase productivity but also preserve the environment for future generations.</p>
+                <p>We work closely with local farmers, providing training, resources, and market access to create sustainable livelihoods and stronger communities.</p>
+            </div>
+            <div class="about-image">
+                <img src="about-wafad.jpg" alt="WAFAD Agricultural Operations">
+            </div>
+        </div>
+    </section>
+
+    <!-- Management Section -->
+    <section id="management">
+        <div class="section-header">
+            <h2>Our Leadership Team</h2>
+            <p>Meet the visionary leaders driving agricultural transformation across Africa</p>
+        </div>
+        <div class="management-grid">
+            <div class="management-card">
+                <img src="ceo-william-ansah.jpg" alt="CEO William Ansah">
+                <h4>William Smith Ansah</h4>
+                <p class="position">Chief Executive Officer & Founder</p>
+                <p>Visionary leader with over 20 years of experience in agricultural development and sustainable farming practices across West Africa.</p>
+            </div>
+            <div class="management-card">
+                <img src="coo-management.jpg" alt="Chief Operating Officer">
+                <h4>Mr. Mark Armah Ampofo</h4>
+                <p class="position">General Manager</p>
+                <p>Operations expert specializing in large-scale agricultural management and supply chain optimization throughout African markets.</p>
+            </div>
+            <div class="management-card">
+                <img src="cto-management.jpg" alt="Chief Technology Officer">
+                <h4>Franklin A. Amoah</h4>
+                <p class="position">Head of Finance and IT</p>
+                <p>Agricultural technology innovator focused on implementing smart farming solutions and precision agriculture systems.</p>
+            </div>
+            <div class="management-card">
+                <img src="cfo-management.jpg" alt="Chief Financial Officer">
+                <h4>Emmanuel Osei</h4>
+                <p class="position">Chief Operating Officer</p>
+                <p>Financial strategist with expertise in agricultural investment, risk management, and sustainable business development.</p>
+            </div>
+            <div class="management-card">
+                <img src="head-development.jpg" alt="Head of Development">
+                <h4>Fatima Al-Hassan</h4>
+                <p class="position">Head of Agricultural Development</p>
+                <p>Agricultural scientist leading research and development initiatives in crop optimization and livestock management.</p>
+            </div>
+            <div class="management-card">
+                <img src="head-development.jpg" alt="Head of Development">
+                <h4>Fatima Al-Hassan</h4>
+                <p class="position">Head of Agricultural Development</p>
+                <p>Agricultural scientist leading research and development initiatives in crop optimization and livestock management.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Farms Section -->
+    <section id="farms">
+        <div class="section-header">
+            <h2>Our Farms</h2>
+            <p>Diverse agricultural operations producing quality crops and livestock across multiple locations</p>
+        </div>
+        <div class="farms-container">
+            <div class="farm-section">
+                <h3>Crop Production</h3>
+                <div class="farm-grid">
+                    <div class="farm-item">
+                        <img src="crop-maize.jpg" alt="Maize Farm">
+                        <h4>Maize Production</h4>
+                        <p>High-yield maize varieties cultivated using sustainable practices</p>
+                    </div>
+                    <div class="farm-item">
+                        <img src="crop-rice.jpg" alt="Rice Farm">
+                        <h4>Rice Cultivation</h4>
+                        <p>Premium rice varieties grown in optimal conditions</p>
+                    </div>
+                    <div class="farm-item">
+                        <img src="crop-cocoa.jpg" alt="Cocoa Farm">
+                        <h4>Cocoa Production</h4>
+                        <p>Quality cocoa beans for international markets</p>
+                    </div>
+                    <div class="farm-item">
+                        <img src="crop-cassava.jpg" alt="Cassava Farm">
+                        <h4>Cassava Farming</h4>
+                        <p>Nutritious cassava roots for food security</p>
+                    </div>
+                    <div class="farm-item">
+                        <img src="crop-vegetables.jpg" alt="Vegetable Farm">
+                        <h4>Vegetable Gardens</h4>
+                        <p>Fresh vegetables for local and export markets</p>
+                    </div>
+                    <div class="farm-item">
+                        <img src="crop-plantain.jpg" alt="Plantain Farm">
+                        <h4>Plantain Cultivation</h4>
+                        <p>Organic plantain production systems</p>
+                    </div>
+                </div>
+            </div>
+            <div class="farm-section">
+                <h3>Livestock & Poultry</h3>
+                <div class="farm-grid">
+                    <div class="farm-item">
+                        <img src="livestock-cattle.jpg" alt="Cattle Farm">
+                        <h4>Cattle Ranching</h4>
+                        <p>Healthy cattle raised for meat and dairy production</p>
+                    </div>
+                    <div class="farm-item">
+                        <img src="livestock-poultry.jpg" alt="Poultry Farm">
+                        <h4>Poultry Production</h4>
+                        <p>Modern poultry facilities for eggs and meat</p>
+                    </div>
+                    <div class="farm-item">
+                        <img src="livestock-goats.jpg" alt="Goat Farm">
+                        <h4>Goat Farming</h4>
+                        <p>Sustainable goat rearing for meat and milk</p>
+                    </div>
+                    <div class="farm-item">
+                        <img src="livestock-fish.jpg" alt="Fish Farm">
+                        <h4>Aquaculture</h4>
+                        <p>Fish farming for protein and income generation</p>
+                    </div>
+                    <div class="farm-item">
+                        <img src="livestock-sheep.jpg" alt="Sheep Farm">
+                        <h4>Sheep Husbandry</h4>
+                        <p>Quality sheep breeding and management</p>
+                    </div>
+                    <div class="farm-item">
+                        <img src="livestock-pigs.jpg" alt="Pig Farm">
+                        <h4>Pig Production</h4>
+                        <p>Efficient pig farming with modern facilities</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Impact Section -->
+    <section id="impact">
+        <div class="section-header">
+            <h2>Our Impact</h2>
+            <p>Transforming lives and communities through sustainable agriculture</p>
+        </div>
+        <div class="impact-stats">
+            <div class="stat-card">
+                <div class="stat-number">50,000+</div>
+                <div class="stat-label">Farmers Empowered</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">200+</div>
+                <div class="stat-label">Communities Served</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">1,500,000</div>
+                <div class="stat-label">Acres Under Cultivation</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">15</div>
+                <div class="stat-label">African Countries</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials">
+        <div class="section-header">
+            <h2>What Our Clients & Farmers Say</h2>
+            <p>Real stories from farmers and partners who have experienced the WAFAD difference</p>
+        </div>
+        <div class="testimonials-container">
+            <div class="testimonial-card">
+                <p class="testimonial-text">WAFAD transformed our farming community. Their modern techniques increased our maize yield by 300% while teaching us sustainable practices. Our families now have better food security and income.</p>
+                <div class="testimonial-author">
+                    <img src="testimonial-farmer-1.jpg" alt="Kofi Asamoah">
+                    <div class="author-info">
+                        <h5>Kofi Asamoah</h5>
+                        <p>Farmer, Ashanti Region</p>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <p class="testimonial-text">Working with WAFAD has been exceptional. Their professional approach to agriculture and commitment to quality makes them our preferred partner for sourcing premium agricultural products.</p>
+                <div class="testimonial-author">
+                    <img src="testimonial-client-1.jpg" alt="Sarah Johnson">
+                    <div class="author-info">
+                        <h5>Sarah Johnson</h5>
+                        <p>Export Manager, AgriTrade Ltd</p>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <p class="testimonial-text">The training programs provided by WAFAD changed everything for our women's farming cooperative. We now use modern irrigation and have tripled our vegetable production.</p>
+                <div class="testimonial-author">
+                    <img src="testimonial-farmer-2.jpg" alt="Mama Adwoa">
+                    <div class="author-info">
+                        <h5>Mama Adwoa</h5>
+                        <p>Cooperative Leader, Northern Region</p>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <p class="testimonial-text">WAFAD's livestock program helped us establish a profitable poultry business. Their ongoing support and veterinary services ensure our birds are healthy and productive.</p>
+                <div class="testimonial-author">
+                    <img src="testimonial-farmer-3.jpg" alt="Ibrahim Mohammed">
+                    <div class="author-info">
+                        <h5>Ibrahim Mohammed</h5>
+                        <p>Poultry Farmer, Upper East Region</p>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <p class="testimonial-text">As a young farmer, WAFAD's mentorship program gave me the knowledge and confidence to start my own agricultural enterprise. Their support is invaluable.</p>
+                <div class="testimonial-author">
+                    <img src="testimonial-farmer-4.jpg" alt="Grace Nkrumah">
+                    <div class="author-info">
+                        <h5>Grace Nkrumah</h5>
+                        <p>Young Farmer, Central Region</p>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <p class="testimonial-text">WAFAD's commitment to sustainable agriculture aligns perfectly with our environmental goals. They deliver quality products while maintaining ecological responsibility.</p>
+                <div class="testimonial-author">
+                    <img src="testimonial-client-2.jpg" alt="Dr. Michael Chen">
+                    <div class="author-info">
+                        <h5>Dr. Michael Chen</h5>
+                        <p>Sustainability Director, Green Foods Inc</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>WAFAD LIMITED</h4>
+                <p>William Ansah Farms and Agriculture Development</p>
+                <p>Leading sustainable agriculture across Africa</p>
+            </div>
+            <div class="footer-section">
+                <h4>Contact Information</h4>
+                <p>📍 Head Office: Suhum, Eastern Region Ghana</p>
+                <p>📞 Phone: +233 509958123 / +233 533907194</p>
+                <p>✉️ Email: info@wafadlimited.com</p>
+                <p>🌐 Website: www.wafadlimited.com</p>
+            </div>
+            <div class="footer-section">
+                <h4>Our Services</h4>
+                <p><a href="#farms">Crop Production</a></p>
+                <p><a href="#farms">Livestock Management</a></p>
+                <p><a href="#about">Agricultural Training</a></p>
+                <p><a href="#impact">Community Development</a></p>
+            </div>
+            <div class="footer-section">
+                <h4>Follow Us</h4>
+                <p><a href="#">Facebook</a></p>
+                <p><a href="#">Twitter</a></p>
+                <p><a href="#">LinkedIn</a></p>
+                <p><a href="#">Instagram</a></p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 WAFAD LIMITED. All rights reserved. | Privacy Policy | Terms of Service</p>
+        </div>
+    </footer>
+
+    <script>
+        // Hero slideshow functionality
+        const slides = document.querySelectorAll('.hero-slide');
+        let currentSlide = 0;
+
+        function nextSlide() {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+
+        // Change slide every 5 seconds
+        setInterval(nextSlide, 5000);
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Header background change on scroll
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(34, 139, 34, 0.98)';
+            } else {
+                header.style.background = 'rgba(34, 139, 34, 0.95)';
+            }
+        });
+
+        // Animate stats on scroll
+        function animateStats() {
+            const stats = document.querySelectorAll('.stat-number');
+            stats.forEach(stat => {
+                const target = parseInt(stat.textContent.replace(/[^0-9]/g, ''));
+                const suffix = stat.textContent.replace(/[0-9]/g, '').replace(/,/g, '');
+                let current = 0;
+                const increment = target / 100;
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        current = target;
+                        clearInterval(timer);
+                    }
+                    if (target >= 1000000) {
+                        stat.textContent = (current / 1000000).toFixed(1) + 'M' + suffix;
+                    } else if (target >= 1000) {
+                        stat.textContent = (current / 1000).toFixed(0) + 'K' + suffix;
+                    } else {
+                        stat.textContent = Math.floor(current) + suffix;
+                    }
+                }, 20);
+            });
+        }
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    if (entry.target.classList.contains('impact-stats')) {
+                        animateStats();
+                    }
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for animation
+        document.querySelectorAll('.management-card, .farm-item, .testimonial-card, .stat-card, .impact-stats').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+
+        // Mobile menu toggle (if needed)
+        const createMobileMenu = () => {
+            const nav = document.querySelector('nav');
+            const menuToggle = document.createElement('button');
+            menuToggle.innerHTML = '☰';
+            menuToggle.classList.add('mobile-menu-toggle');
+            menuToggle.style.cssText = `
+                display: none;
+                background: none;
+                border: none;
+                color: white;
+                font-size: 1.5rem;
+                cursor: pointer;
+                @media (max-width: 768px) {
+                    display: block;
+                }
+            `;
+            
+            menuToggle.addEventListener('click', () => {
+                nav.classList.toggle('mobile-open');
+            });
+            
+            document.querySelector('.header-content').appendChild(menuToggle);
+        };
+
+        // Initialize mobile menu
+        createMobileMenu();
+
+        // Add mobile styles
+        const mobileStyles = document.createElement('style');
+        mobileStyles.textContent = `
+            @media (max-width: 768px) {
+                .mobile-menu-toggle {
+                    display: block !important;
+                }
+                
+                nav {
+                    position: absolute;
+                    top: 100%;
+                    left: 0;
+                    width: 100%;
+                    background: rgba(34, 139, 34, 0.98);
+                    transform: translateY(-100%);
+                    opacity: 0;
+                    pointer-events: none;
+                    transition: all 0.3s ease;
+                }
+                
+                nav.mobile-open {
+                    transform: translateY(0);
+                    opacity: 1;
+                    pointer-events: auto;
+                }
+                
+                nav ul {
+                    flex-direction: column;
+                    padding: 1rem;
+                    gap: 1rem;
+                }
+                
+                .header-content {
+                    position: relative;
+                }
+            }
+        `;
+        document.head.appendChild(mobileStyles);
+    </script>
+</body>
+</html>
